@@ -6,6 +6,7 @@ const BIRTH_DAY = 20;
 const DRAW_DELAY_MS = 1000;
 const STORAGE_KEY = "sashideMaria.omikuji.v2";
 const STORAGE_VERSION = 2;
+const SITE_URL = "https://maria.nycu.cc/";
 
 const fortuneData = [
   {
@@ -362,7 +363,7 @@ function showResult(result) {
   elements.resultImage.removeAttribute("src");
   elements.resultImage.src = result.image.src;
   elements.actionStatus.textContent = "正在準備結果卡…";
-  elements.shareButton.disabled = true;
+  elements.shareButton.disabled = false;
   elements.downloadButton.disabled = true;
 
   resultCardBlobPromise = prepareResultCardBlob(result)
@@ -596,10 +597,7 @@ function resultShareText() {
 }
 
 async function copyResultText() {
-  const publicUrl = ["http:", "https:"].includes(window.location.protocol)
-    ? `\n${window.location.href}`
-    : "";
-  const text = `${resultShareText()}${publicUrl}`;
+  const text = `${resultShareText()}\n${SITE_URL}`;
 
   if (navigator.clipboard?.writeText) {
     try {
@@ -632,27 +630,11 @@ async function shareResult() {
   elements.actionStatus.textContent = "正在開啟分享…";
 
   try {
-    const blob = await resultCardBlobPromise;
     const shareData = {
       title: `每日一毬・${currentResult.fortune.level}`,
       text: resultShareText(),
+      url: SITE_URL,
     };
-    if (["http:", "https:"].includes(window.location.protocol)) {
-      shareData.url = window.location.href;
-    }
-
-    if (blob && typeof File !== "undefined") {
-      const file = new File([blob], resultFilename(), { type: "image/png" });
-      if (navigator.canShare?.({ files: [file] })) {
-        await navigator.share({
-          title: shareData.title,
-          text: shareData.text,
-          files: [file],
-        });
-        elements.actionStatus.textContent = "分享完成！";
-        return;
-      }
-    }
 
     if (navigator.share) {
       await navigator.share(shareData);
