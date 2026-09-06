@@ -4,212 +4,32 @@
         <meta charset="UTF-8" />
         <meta
             name="viewport"
-            content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+            content="width=device-width, initial-scale=1.0"
         />
-        <title>指出毬亞 Birthday Countdown & Fan Page</title>
+        <meta
+            name="description"
+            content="指出毬亞生日倒數與每日一毬粉絲網站"
+        />
+        <title>指出毬亞生日倒數｜每日一毬</title>
         <link rel="stylesheet" href="css/style.css" />
-        <!-- FontAwesome -->
         <link
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
         />
-        <style>
-            /* Overrides for specific requests */
-            .standee {
-                max-height: 75vh !important;
-                bottom: 2% !important; /* Move up */
-                transition: transform 0.3s ease-out; /* Smooth transition on hover */
-            }
-
-            .center-wrapper {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                gap: 15px;
-                transform: scale(1.2); /* Make center bigger */
-                z-index: 50;
-                width: 100%;
-                max-width: 450px;
-            }
-
-            .countdown-container {
-                width: 100%;
-            }
-
-            /* Define new animations for tilted swaying */
-            @keyframes swayLeft {
-                0% {
-                    transform: rotate(-15deg);
-                }
-                50% {
-                    transform: rotate(-8deg);
-                }
-                100% {
-                    transform: rotate(-15deg);
-                }
-            }
-            @keyframes swayRight {
-                0% {
-                    transform: rotate(15deg);
-                }
-                50% {
-                    transform: rotate(8deg);
-                }
-                100% {
-                    transform: rotate(15deg);
-                }
-            }
-
-            .standee-left {
-                left: 5% !important; /* Move inward */
-                transform-origin: bottom center;
-                animation: swayLeft 5s ease-in-out infinite !important;
-            }
-            .standee-right {
-                right: 5% !important; /* Move inward */
-                transform-origin: bottom center;
-                animation: swayRight 5s ease-in-out infinite !important;
-            }
-
-            /* Omikuji Relocation */
-            .omikuji-container {
-                position: static !important; /* Move to normal flow */
-                margin-top: 0 !important;
-                background: none !important;
-                box-shadow: none !important;
-                border: none !important;
-                width: 100%;
-                max-width: none !important;
-            }
-            .omikuji-btn {
-                font-size: 1.5rem;
-                padding: 15px 20px;
-                width: 100%;
-                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            }
-            .omikuji-result {
-                display: none !important; /* Hide original result display */
-            }
-
-            /* Modal Styles */
-            .modal {
-                display: none;
-                position: fixed;
-                z-index: 9999;
-                left: 0;
-                top: 0;
-                width: 100%;
-                height: 100%;
-                background-color: rgba(0, 0, 0, 0.5);
-                justify-content: center;
-                align-items: center;
-            }
-            .modal-content {
-                background-color: #fff;
-                padding: 20px;
-                border: 5px solid var(--primary-color);
-                border-radius: 20px;
-                text-align: center;
-                font-size: 1.5rem;
-                font-weight: bold;
-                color: #d63384;
-                width: 80%;
-                max-width: 900px;
-                min-height: 60vh;
-                animation: popIn 0.3s;
-                position: relative;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-            }
-            .modal-image {
-                max-width: 100%;
-                max-height: 80vh;
-                margin-top: 20px;
-                border-radius: 10px;
-                display: none;
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            }
-            @keyframes shake {
-                0% {
-                    transform: translate(1px, 1px) rotate(0deg);
-                }
-                10% {
-                    transform: translate(-1px, -2px) rotate(-1deg);
-                }
-                20% {
-                    transform: translate(-3px, 0px) rotate(1deg);
-                }
-                30% {
-                    transform: translate(3px, 2px) rotate(0deg);
-                }
-                40% {
-                    transform: translate(1px, -1px) rotate(1deg);
-                }
-                50% {
-                    transform: translate(-1px, 2px) rotate(-1deg);
-                }
-                60% {
-                    transform: translate(-3px, 1px) rotate(0deg);
-                }
-                70% {
-                    transform: translate(3px, 1px) rotate(-1deg);
-                }
-                80% {
-                    transform: translate(-1px, -1px) rotate(1deg);
-                }
-                90% {
-                    transform: translate(1px, 2px) rotate(0deg);
-                }
-                100% {
-                    transform: translate(1px, -2px) rotate(-1deg);
-                }
-            }
-            .close-modal {
-                color: #aaa;
-                position: absolute;
-                top: 10px;
-                right: 20px;
-                font-size: 28px;
-                font-weight: bold;
-                cursor: pointer;
-            }
-            .close-modal:hover {
-                color: #000;
-            }
-
-            /* Footer Links */
-            .footer-links {
-                position: absolute;
-                bottom: 25px;
-                display: flex;
-                gap: 20px;
-                z-index: 100;
-                background: rgba(255, 255, 255, 0.7);
-                padding: 10px 30px;
-                border-radius: 30px;
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-            .footer-links a {
-                text-decoration: none;
-                color: var(--primary-color);
-                font-weight: bold;
-                font-size: 0.9rem;
-            }
-            .footer-links a:hover {
-                text-decoration: underline;
-                color: #d63384;
-            }
-        </style>
+        <script src="js/script.js" defer></script>
     </head>
     <body>
-        <div class="container">
-            <div class="center-wrapper">
-                <!-- Main Countdown -->
-                <div class="countdown-container">
-                    <div class="countdown-title">指出毬亞生日倒數</div>
-                    <div class="countdown-timer" id="timer">
+        <main class="container">
+            <section class="center-wrapper" aria-label="生日倒數與每日抽籤">
+                <div class="countdown-container" id="countdownContainer">
+                    <h1 class="countdown-title">指出毬亞生日倒數</h1>
+
+                    <div
+                        class="countdown-timer"
+                        id="timer"
+                        role="timer"
+                        aria-label="距離指出毬亞生日的剩餘時間"
+                    >
                         <div class="time-unit">
                             <span id="days">00</span>
                             <span class="unit-label">天</span>
@@ -227,184 +47,149 @@
                             <span class="unit-label">秒</span>
                         </div>
                     </div>
+
+                    <div
+                        class="birthday-message"
+                        id="birthdayMessage"
+                        role="status"
+                        hidden
+                    >
+                        <span class="birthday-sparkles" aria-hidden="true">✦</span>
+                        <p>指出毬亞，生日快樂！</p>
+                        <span class="birthday-sparkles" aria-hidden="true">✦</span>
+                    </div>
                 </div>
 
-                <!-- Omikuji (Fortune) -->
                 <div class="omikuji-container">
-                    <button class="omikuji-btn" id="omikujiBtn">
+                    <button class="omikuji-btn" id="omikujiBtn" type="button">
                         每日一毬
                     </button>
-                    <div class="omikuji-result" id="omikujiResult"></div>
+                    <p class="omikuji-note" id="omikujiNote">
+                        每天日本時間 00:00 更新
+                    </p>
                 </div>
-            </div>
+            </section>
 
-            <!-- Modal -->
-            <div id="omikujiModal" class="modal">
-                <div class="modal-content">
-                    <span class="close-modal">&times;</span>
-                    <p id="modalText"></p>
-                    <img
-                        id="modalImage"
-                        class="modal-image"
-                        src=""
-                        alt="Omikuji Result"
-                    />
-                </div>
-            </div>
+            <dialog
+                id="omikujiModal"
+                class="modal"
+                aria-labelledby="modalTitle"
+            >
+                <article class="modal-content">
+                    <button
+                        class="close-modal"
+                        id="closeModal"
+                        type="button"
+                        aria-label="關閉今日籤運"
+                    >
+                        <span aria-hidden="true">&times;</span>
+                    </button>
 
-            <!-- Footer Links -->
-            <div class="footer-links">
-                <a href="https://x.com/sashide_m" target="_blank"
-                    ><i class="fa-brands fa-x-twitter"></i> Twitter</a
-                >
-                <a href="https://www.nicovideo.jp/series/315273" target="_blank"
-                    ><i class="fa-solid fa-video"></i> Niconico</a
-                >
-                <a
-                    href="https://www.instagram.com/mariasashide_/"
-                    target="_blank"
-                    ><i class="fa-brands fa-instagram"></i> Instagram</a
-                >
-                <a href="https://qlover.jp/sashidega" target="_blank"
-                    ><i class="fa-solid fa-heart"></i> QloveR</a
-                >
-                <a href="https://ani.chokume.com/" target="_blank"
-                    ><i class="fa-solid fa-envelope"></i> Chokume</a
-                >
-                <a
-                    href="https://withline.jp/talent/maria_sashide"
-                    target="_blank"
-                    ><i class="fa-solid fa-globe"></i> Homepage</a
-                >
-            </div>
+                    <div class="draw-loading" id="drawLoading" role="status">
+                        <div class="omikuji-shaker" aria-hidden="true">御籤</div>
+                        <p>抽籤中…</p>
+                    </div>
 
-            <!-- Standee Left -->
-            <!-- Replace src with your actual image path e.g., 'images/chara_left.png' -->
+                    <section class="result-card" id="resultCard" hidden>
+                        <p class="result-eyebrow" id="modalTitle">今日籤運</p>
+                        <h2 class="result-level" id="modalLevel"></h2>
+
+                        <div class="result-image-frame" id="resultImageFrame">
+                            <img
+                                id="modalImage"
+                                class="modal-image"
+                                src=""
+                                alt=""
+                            />
+                            <p class="image-error" id="imageError" hidden>
+                                圖片暫時無法載入，稍後再試一次吧。
+                            </p>
+                        </div>
+
+                        <p class="result-message" id="modalMessage"></p>
+
+                        <div class="result-actions">
+                            <button
+                                class="action-btn action-btn-primary"
+                                id="shareResult"
+                                type="button"
+                            >
+                                <i
+                                    class="fa-solid fa-arrow-up-from-bracket"
+                                    aria-hidden="true"
+                                ></i>
+                                分享
+                            </button>
+                            <button
+                                class="action-btn"
+                                id="downloadResult"
+                                type="button"
+                            >
+                                <i
+                                    class="fa-solid fa-download"
+                                    aria-hidden="true"
+                                ></i>
+                                下載結果卡
+                            </button>
+                        </div>
+                        <p
+                            class="action-status"
+                            id="actionStatus"
+                            role="status"
+                            aria-live="polite"
+                        ></p>
+                    </section>
+                </article>
+            </dialog>
+
+            <nav class="footer-links" aria-label="指出毬亞相關連結">
+                <a href="https://x.com/sashide_m" target="_blank" rel="noopener noreferrer"
+                    ><i class="fa-brands fa-x-twitter" aria-hidden="true"></i> Twitter</a
+                >
+                <a href="https://www.nicovideo.jp/series/315273" target="_blank" rel="noopener noreferrer"
+                    ><i class="fa-solid fa-video" aria-hidden="true"></i> Niconico</a
+                >
+                <a href="https://www.instagram.com/mariasashide_/" target="_blank" rel="noopener noreferrer"
+                    ><i class="fa-brands fa-instagram" aria-hidden="true"></i> Instagram</a
+                >
+                <a href="https://qlover.jp/sashidega" target="_blank" rel="noopener noreferrer"
+                    ><i class="fa-solid fa-heart" aria-hidden="true"></i> QloveR</a
+                >
+                <a href="https://ani.chokume.com/" target="_blank" rel="noopener noreferrer"
+                    ><i class="fa-solid fa-envelope" aria-hidden="true"></i> Chokume</a
+                >
+                <a href="https://withline.jp/talent/maria_sashide" target="_blank" rel="noopener noreferrer"
+                    ><i class="fa-solid fa-globe" aria-hidden="true"></i> Homepage</a
+                >
+            </nav>
+
             <img
                 src="images/left_standee.png"
-                alt="Left Standee"
+                alt="指出毬亞左側人物立繪"
                 class="standee standee-left"
-                onerror="
-                    this.style.display = 'none';
-                    document.getElementById('placeholder-left').style.display =
-                        'flex';
-                "
+                id="standeeLeft"
             />
             <div
-                id="placeholder-left"
+                id="placeholderLeft"
                 class="standee standee-left placeholder"
-                style="display: none"
+                hidden
             >
-                指出毬亞 (左)
+                指出毬亞
             </div>
 
-            <!-- Standee Right -->
             <img
                 src="images/right_standee.png"
-                alt="Right Standee"
+                alt="指出毬亞右側人物立繪"
                 class="standee standee-right"
-                onerror="
-                    this.style.display = 'none';
-                    document.getElementById('placeholder-right').style.display =
-                        'flex';
-                "
+                id="standeeRight"
             />
             <div
-                id="placeholder-right"
+                id="placeholderRight"
                 class="standee standee-right placeholder"
-                style="display: none"
+                hidden
             >
-                指出毬亞 (右)
+                指出毬亞
             </div>
-        </div>
-
-        <script src="js/script.js"></script>
-        <script>
-            // Override functionality for Modal support
-            document.addEventListener("DOMContentLoaded", () => {
-                const btn = document.getElementById("omikujiBtn");
-                // Clone button to remove listeners attached by script.js
-                const newBtn = btn.cloneNode(true);
-                btn.parentNode.replaceChild(newBtn, btn);
-
-                const modal = document.getElementById("omikujiModal");
-                const modalContent = document.querySelector(".modal-content");
-                const span = document.getElementsByClassName("close-modal")[0];
-                const modalText = document.getElementById("modalText");
-                const modalImage = document.getElementById("modalImage");
-
-                newBtn.addEventListener("click", () => {
-                    newBtn.disabled = true;
-
-                    // Show modal immediately with animation
-                    modal.style.display = "flex";
-                    modalText.textContent = "抽籤中...";
-                    modalImage.style.display = "none";
-                    modalContent.style.animation = "shake 0.5s infinite";
-
-                    setTimeout(() => {
-                        modalContent.style.animation = "none"; // Stop shaking
-
-                        // Use fortuneDict from script.js if available, else fallback
-                        let resultText = "大吉";
-                        let resultAudio = "";
-                        let resultImage = "";
-
-                        if (typeof fortuneDict !== "undefined") {
-                            // Patch for typo in image name
-                            fortuneDict.forEach((item) => {
-                                if (
-                                    item.image &&
-                                    item.image.includes("shokichi.jpg")
-                                ) {
-                                    item.image = item.image.replace(
-                                        "shokichi.jpg",
-                                        "syokichi.jpg",
-                                    );
-                                }
-                            });
-
-                            const result =
-                                fortuneDict[
-                                    Math.floor(
-                                        Math.random() * fortuneDict.length,
-                                    )
-                                ];
-                            resultText = result.text;
-                            resultAudio = result.audio;
-                            resultImage = result.image;
-                        }
-
-                        modalText.textContent = resultText;
-                        if (resultImage) {
-                            modalImage.src = resultImage;
-                            modalImage.style.display = "block";
-                        }
-
-                        if (resultAudio) {
-                            const audio = new Audio(resultAudio);
-                            audio
-                                .play()
-                                .catch((e) =>
-                                    console.log("Audio play error:", e),
-                                );
-                        }
-
-                        newBtn.textContent = "每日一毬";
-                        newBtn.disabled = false;
-                    }, 1000);
-                });
-
-                span.onclick = function () {
-                    modal.style.display = "none";
-                };
-
-                window.onclick = function (event) {
-                    if (event.target == modal) {
-                        modal.style.display = "none";
-                    }
-                };
-            });
-        </script>
+        </main>
     </body>
 </html>
