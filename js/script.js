@@ -380,7 +380,7 @@ function showResult(result) {
       elements.shareButton.disabled = false;
       elements.downloadButton.disabled = true;
       elements.actionStatus.textContent =
-        "結果卡暫時無法產生，仍可分享文字。";
+        "結果卡暫時無法產生，仍可複製結果連結。";
       return null;
     });
 
@@ -606,14 +606,6 @@ function resultFilename() {
   return `maria-omikuji-${displayedResult?.image.id ?? activeDateKey}.png`;
 }
 
-function resultShareText() {
-  if (!displayedResult) {
-    return "";
-  }
-
-  return `今天的每日一毬：${displayedResult.fortune.level}\n${displayedResult.fortune.message}`;
-}
-
 function resultShareUrl() {
   if (!displayedResult) {
     return SITE_URL;
@@ -622,9 +614,7 @@ function resultShareUrl() {
   return `${SITE_URL}share/${encodeURIComponent(displayedResult.image.id)}.html`;
 }
 
-async function copyResultText() {
-  const text = `${resultShareText()}\n${resultShareUrl()}`;
-
+async function copyText(text) {
   if (navigator.clipboard?.writeText) {
     try {
       await navigator.clipboard.writeText(text);
@@ -653,37 +643,14 @@ async function shareResult() {
     return;
   }
 
-  elements.actionStatus.textContent = "正在開啟分享…";
+  elements.actionStatus.textContent = "正在複製連結…";
 
   try {
-    const shareData = {
-      title: `每日一毬・${displayedResult.fortune.level}`,
-      text: resultShareText(),
-      url: resultShareUrl(),
-    };
-
-    if (navigator.share) {
-      await navigator.share(shareData);
-      elements.actionStatus.textContent = "分享完成！";
-      return;
-    }
-
-    await copyResultText();
-    elements.actionStatus.textContent = "結果文字與網址已複製。";
+    await copyText(resultShareUrl());
+    elements.actionStatus.textContent = "結果連結已複製。";
   } catch (error) {
-    if (error?.name === "AbortError") {
-      elements.actionStatus.textContent = "";
-      return;
-    }
-
-    console.warn("Unable to share result.", error);
-    try {
-      await copyResultText();
-      elements.actionStatus.textContent = "結果文字與網址已複製。";
-    } catch (copyError) {
-      console.warn("Unable to copy result.", copyError);
-      elements.actionStatus.textContent = "分享失敗，請稍後再試。";
-    }
+    console.warn("Unable to copy result link.", error);
+    elements.actionStatus.textContent = "複製失敗，請稍後再試。";
   }
 }
 
