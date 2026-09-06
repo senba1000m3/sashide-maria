@@ -142,6 +142,7 @@ const elements = {
 
 let activeDateKey = "";
 let currentResult = null;
+let displayedResult = null;
 let resultCardBlobPromise = null;
 let drawTimer = null;
 const bundledImagePromises = new Map();
@@ -352,6 +353,7 @@ function showLoadingState() {
 }
 
 function showResult(result) {
+  displayedResult = result;
   elements.drawLoading.hidden = true;
   elements.resultCard.hidden = false;
   elements.resultLevel.textContent = result.fortune.level;
@@ -408,6 +410,22 @@ function drawFortune() {
     showResult(currentResult);
     drawTimer = null;
   }, delay);
+}
+
+function openSharedResultFromUrl() {
+  const imageId = new URLSearchParams(window.location.search).get("share");
+  if (!imageId) {
+    return;
+  }
+
+  for (const fortune of [...fortuneData, birthdayFortune]) {
+    const image = fortune.images.find((item) => item.id === imageId);
+    if (image) {
+      openResultModal();
+      showResult(buildResult(fortune, image, activeDateKey));
+      return;
+    }
+  }
 }
 
 function loadImage(source) {
@@ -585,19 +603,27 @@ async function prepareResultCardBlob(result) {
 }
 
 function resultFilename() {
-  return `maria-omikuji-${currentResult?.dateKey ?? activeDateKey}.png`;
+  return `maria-omikuji-${displayedResult?.image.id ?? activeDateKey}.png`;
 }
 
 function resultShareText() {
-  if (!currentResult) {
+  if (!displayedResult) {
     return "";
   }
 
-  return `今天的每日一毬：${currentResult.fortune.level}\n${currentResult.fortune.message}`;
+  return `今天的每日一毬：${displayedResult.fortune.level}\n${displayedResult.fortune.message}`;
+}
+
+function resultShareUrl() {
+  if (!displayedResult) {
+    return SITE_URL;
+  }
+
+  return `${SITE_URL}share/${encodeURIComponent(displayedResult.image.id)}.html`;
 }
 
 async function copyResultText() {
-  const text = `${resultShareText()}\n${SITE_URL}`;
+  const text = `${resultShareText()}\n${resultShareUrl()}`;
 
   if (navigator.clipboard?.writeText) {
     try {
@@ -623,7 +649,7 @@ async function copyResultText() {
 }
 
 async function shareResult() {
-  if (!currentResult) {
+  if (!displayedResult) {
     return;
   }
 
@@ -631,9 +657,9 @@ async function shareResult() {
 
   try {
     const shareData = {
-      title: `每日一毬・${currentResult.fortune.level}`,
+      title: `每日一毬・${displayedResult.fortune.level}`,
       text: resultShareText(),
-      url: SITE_URL,
+      url: resultShareUrl(),
     };
 
     if (navigator.share) {
@@ -662,7 +688,7 @@ async function shareResult() {
 }
 
 async function downloadResult() {
-  if (!currentResult) {
+  if (!displayedResult) {
     return;
   }
 
@@ -739,4 +765,5 @@ setupStandee("standeeLeft", "placeholderLeft");
 setupStandee("standeeRight", "placeholderRight");
 
 updateCountdown();
+openSharedResultFromUrl();
 window.setInterval(updateCountdown, 1000);
